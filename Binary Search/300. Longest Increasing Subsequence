@@ -1,0 +1,50 @@
+dp is an increasing array, we can use binary search to find the index to insert/update the array.
+ans = len(dp)
+Time complexity: O(nlogn)
+Space complexity: O(n)
+
+class Solution:
+  def lengthOfLIS(self, nums: List[int]) -> int:
+    d = []
+    for x in nums:
+      i = bisect_left(d, x)
+      if i == len(d):
+        d.append(x)
+      else:
+        d[i] = x
+    return len(d)
+
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        def insert(A, x):
+            l , r = 0, len(A)
+            while l < r:
+                m = l + (r-l)//2
+                if A[m] >= x:
+                    r = m
+                else:
+                    l = m + 1
+            return l
+        d = []
+        for num in nums:
+            i = insert(d, num)
+            if i == len(d):
+                d.append(num)
+            else:
+                d[i] = num
+        return len(d)
+
+
+Dynamic Programming
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        dp = []
+        for i in range(len(nums)):
+            dp.append(1)
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+        return max(dp)
