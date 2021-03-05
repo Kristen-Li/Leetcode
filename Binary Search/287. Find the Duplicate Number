@@ -1,0 +1,68 @@
+low和fast会在环中相遇，先假设一些量：起点到环的入口长度为m，环的周长为c，在fast和slow相遇时slow走了n步。则fast走了2n步，fast比slow多走了n步，而这n步全用在了在环里循环（n%c==0）。
+当fast和last相遇之后，我们设置第三个指针finder，它从起点开始和slow(在fast和slow相遇处)同步前进，当finder和slow相遇时，就是在环的入口处相遇，也就是重复的那个数字相遇。
+
+为什么 finder 和 slow 相遇在入口
+fast 和 slow 相遇时，slow 在环中行进的距离是n-m，其中 n%c==0。这时我们再让 slow 前进 m 步——也就是在环中走了 n 步了。而 n%c==0 即 slow 在环里面走的距离是环的周长的整数倍，就回到了环的入口了，而入口就是重复的数字。
+我们不知道起点到入口的长度m，所以弄个 finder 和 slow 一起走，他们必定会在入口处相遇。
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        fast = slow = 0
+        
+        while True:
+            fast = nums[nums[fast]]
+            slow = nums[slow]
+            if fast == slow:
+                break
+        
+        p = 0
+        while p != slow:
+            p = nums[p]
+            slow = nums[slow]
+        return p #or slow
+Time O(N)
+Space O(1)
+
+
+class Solution:
+    def findDuplicate(self, nums):
+        seen = set()
+        for num in nums:
+            if num in seen:
+                return num
+            seen.add(num)
+
+
+Time complexity : O(n)
+Set in both Python and Java rely on underlying hash tables, so insertion and lookup have amortized constant time complexities. The algorithm is therefore linear, as it consists of a for loop that performs constant work n times.
+Space complexity : O(n)
+In the worst case, the duplicate element appears twice, with one of its appearances at array index n−1. In this case, seen will contain n−1 distinct values, and will therefore occupy O(n) space.
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        size = len(nums)
+        left = 1
+        right = size - 1
+
+        while left < right:
+            mid = left + (right - left) // 2
+
+            cnt = 0
+            for num in nums:
+                if num <= mid:
+                    cnt += 1
+            # 根据抽屉原理，小于等于 4 的数的个数如果严格大于 4 个，
+            # 此时重复元素一定出现在 [1, 4] 区间里
+
+            if cnt > mid:
+                # 重复的元素一定出现在 [left, mid] 区间里
+                right = mid 
+            else:
+                # if 分析正确了以后，else 搜索的区间就是 if 的反面
+                # [mid + 1, right]
+                left = mid + 1
+        return left
+复杂度分析：
+
+时间复杂度：O(NlogN)，二分法的时间复杂度为O(logN)，在二分法的内部，执行了一次 for 循环，时间复杂度为 O(N)，故时间复杂度为 O(NlogN)。
+空间复杂度：O(1)，使用了一个 cnt 变量，因此空间复杂度为 O(1)。
