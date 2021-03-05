@@ -2,7 +2,7 @@ dp is an increasing array, we can use binary search to find the index to insert/
 ans = len(dp)
 Time complexity: O(nlogn)
 Space complexity: O(n)
-
+```
 class Solution:
   def lengthOfLIS(self, nums: List[int]) -> int:
     d = []
@@ -13,7 +13,7 @@ class Solution:
       else:
         d[i] = x
     return len(d)
-
+```
 
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
