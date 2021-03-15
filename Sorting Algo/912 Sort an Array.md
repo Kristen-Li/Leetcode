@@ -8,7 +8,8 @@ class Solution:
 		# self.selectionSort(nums)
         self.heapSort(nums)
         return nums
-    
+```
+```
 	# @bubbleSort, o(n^2)
     def bubbleSort(self, nums):
         n = len(nums)
@@ -16,7 +17,8 @@ class Solution:
             for j in range(1, n - i):
                 if nums[j-1] > nums[j]:
                     nums[j-1], nums[j] = nums[j], nums[j-1]
-                    
+```
+```                    
 	# @insertionSort, o(n^2)
     def insertionSort(self, nums): 
         for i in range(1, len(nums)): 
@@ -24,7 +26,8 @@ class Solution:
               nums[i-1], nums[i] = nums[i], nums[i-1]
               i -= 1
         return nums
-        
+```
+```
   # @shellSort, O(nlogn)
   def shell_sort(nums):
         n = len(nums)
@@ -36,7 +39,8 @@ class Solution:
                     i -= gap
             gap //= 2
     return nums    
-		
+```
+```
 	# @selectionSort, o(n^2)
 	def selectionSort(self, nums):
 		for i in range(len(nums)):
@@ -44,7 +48,8 @@ class Solution:
         if nums[j] < nums[i]:
           nums[i], nums[j] = nums[j], nums[i]
 		return nums
-    
+```
+```
 	# @quickSort
     def quickSort(self, nums):
         def helper(head, tail):
@@ -64,7 +69,8 @@ class Solution:
 
         helper(0, len(nums)-1)
         return nums
-     
+```
+```     
 	# @mergeSort
     def merge_sort(nums):
         if len(nums) <= 1:
@@ -75,7 +81,8 @@ class Solution:
         right = merge_sort(nums[mid:])
         # 合并
         return merge(left, right)
-
+```
+```
 
     def merge(left, right):
         res = []
@@ -91,7 +98,8 @@ class Solution:
         res += left[i:]
         res += right[j:]
         return res
-   
+```
+```
    # @heapSort
     def heapSort(self, nums):
         def heapify(nums, n, i): 
@@ -118,4 +126,28 @@ class Solution:
         for i in range(n)[::-1]: 
             nums[i], nums[0] = nums[0], nums[i]
             heapify(nums, i, 0)
+```
+```
+	#@ Quicksort
+	def quick_sort(nums):
+    n = len(nums)
+
+    def quick(left, right):
+        if left >= right:
+            return nums
+        pivot = left
+        i = left
+        j = right
+        while i < j:
+            while i < j and nums[j] > nums[pivot]:
+                j -= 1
+            while i < j and nums[i] <= nums[pivot]:
+                i += 1
+            nums[i], nums[j] = nums[j], nums[i]
+        nums[pivot], nums[j] = nums[j], nums[pivot]
+        quick(left, j - 1)
+        quick(j + 1, right)
+        return nums
+
+    return quick(0, n - 1)
 ```
