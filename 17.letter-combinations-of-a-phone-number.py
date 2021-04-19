@@ -5,36 +5,43 @@
 #
 
 # @lc code=start
+# class Solution:
+#     def letterCombinations(self, digits: str) -> List[str]:
+#         if not digits:
+#             return[]
+        
+#         d = ["","","abc","def","ghi","jkl","mno","pqrs","tuv", "wxyz"]
+#         res = []
+#         def dfs(tmp,idx):
+#             if len(tmp) == len(digits):
+#                 res.append(tmp)
+#                 return
+#             letters = d[ord(digits[idx]) - ord('0')]
+#             for letter in letters:
+#                 dfs(tmp+letter,idx+1)
+#         dfs("",0)
+#         return res
+
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
         if not digits:
-            return list()
+            return[]
         
-        phoneMap = {
-            "2": "abc",
-            "3": "def",
-            "4": "ghi",
-            "5": "jkl",
-            "6": "mno",
-            "7": "pqrs",
-            "8": "tuv",
-            "9": "wxyz",
-        }
+        d = ["","","abc","def","ghi","jkl","mno","pqrs","tuv", "wxyz"]
+        res = []
+        tmp = []
+        def dfs(idx):
+            if len(tmp) == len(digits):
+                res.append(''.join(tmp))
+                return
+            letters = d[ord(digits[idx]) - ord('0')] # convert "2" to 2
+            for letter in letters:
+                tmp.append(letter)
+                dfs(idx+1)
+                tmp.pop()
+        dfs(0)
+        return res
 
-        def backtrack(index: int):
-            if index == len(digits):
-                combinations.append("".join(combination))
-            else:
-                digit = digits[index]
-                for letter in phoneMap[digit]:
-                    combination.append(letter)
-                    backtrack(index + 1)
-                    combination.pop()
-
-        combination = list()
-        combinations = list()
-        backtrack(0)
-        return combinations
 
 # 时间复杂度：O(3^m * 4^n), 其中 m是输入中对应 3 个字母的数字个数，n 是输入中对应 4 个字母的数字个数
 
