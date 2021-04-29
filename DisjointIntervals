@@ -1,0 +1,51 @@
+from typing import List
+class DisjointIntervals:
+    
+    def __init__(self):
+        self.intervals = []
+
+
+    def add(self, add_from: int, add_to: int) -> None:
+        left , right = [], []
+
+        if not self.intervals:
+            self.intervals = [[add_from, add_to]]
+            print(self.intervals)
+            return
+
+        for interval in self.intervals:
+            if interval[1]<  add_from:
+                left.append(interval)
+            elif interval[0] >  add_to:
+                right.append(self.interval)
+            else:
+                 add_from = min(interval[0],  add_from)
+                 add_to = max(interval[1],  add_to)
+
+        self.intervals = left + [[add_from , add_to]] + right
+        print(self.intervals)
+        return
+
+        
+    def remove(self, remove_from: int, remove_to: int) -> None:
+        res = []
+        for interval in self.intervals:
+            # no overlap
+            if interval[1] <= remove_from or interval[0] >= remove_to: 
+                res.append(interval)
+            # interval starts first
+            if interval[0] < remove_from:
+                res.append([interval[0], remove_from])
+            # interval ends first
+            if interval[1] > remove_to:
+                res.append([remove_to,interval[1]])
+        self.intervals = res
+        print(self.intervals)
+        return
+
+a = DisjointIntervals()
+a.add(1,5)
+a.remove(2,3)
+a.add(6,8)
+a.remove(4,7)
+a.add(2,7)
