@@ -1,0 +1,63 @@
+
+
+```python
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def mergeTwoLists(list1, list2):
+    dummy = ListNode()
+    tail = dummy
+
+    while list1 and list2:
+        if list1.val < list2.val:
+            tail.next = list1
+            list1 = list1.next
+        else:
+            tail.next = list2
+            list2 = list2.next
+        tail = tail.next
+
+    tail.next = list1 or list2
+    return dummy.next
+
+```
+
+---
+
+## ⏱️ **Time Complexity: `O(n + m)`**
+
+Where:
+
+- `n` = length of `list1`
+
+- `m` = length of `list2`
+
+### Why?
+
+You traverse **every node exactly once** from both lists.  
+There are no nested loops — just a single pass combining both.
+
+---
+
+## 🧠 **Space Complexity: `O(1)`**
+
+### Why?
+
+You're **not creating new nodes**, just **repointing `.next` pointers**.  
+All the work is done **in-place**, except for one dummy node.
+
+💡 That’s constant auxiliary space.  
+You're not using recursion or allocating a separate list in memory.
+
+---
+
+So:
+
+| Metric            | Complexity |
+| ----------------- | ---------- |
+| Time              | `O(n + m)` |
+| Space (auxiliary) | `O(1)`     |
+
+Let me know if you want the recursive version too — it has a different space complexity 
